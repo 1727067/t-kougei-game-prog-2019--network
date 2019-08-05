@@ -1,4 +1,4 @@
-﻿// ClientSample.cpp
+// ClientSample.cpp
 
 #include "pch.h"
 #include <iostream>
@@ -6,7 +6,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
-int main(void) 
+int main(void)
 {
 	const WCHAR destination[] = L"127.0.0.1";	//接続するサーバのIPアドレス
 	const int PORT_NO = 7000;	//ポート番号はサーバプログラムと共通
@@ -18,26 +18,29 @@ int main(void)
 	// サーバのアドレス情報を設定
 	struct sockaddr_in dest;
 	memset(&dest, 0, sizeof(dest));
-	****
-	InetPton(****);
+	INT WSAAPI InetPton(
+		_In_  INT     Family,
+		_In_  PCTSTR pszAddrString,
+		_Out_ PVOID  pAddrBuf
+	);
 
 	// ソケットの生成
 	SOCKET s = socket(AF_INET, SOCK_STREAM, 0);
 
 	//サーバへの接続
-	if (****) {
+	if (PORT_NO, (struct sockaddr *)&dest, sizeof(struct sockaddr_in)) {
 		printf("%lsに接続できませんでした\n", destination);
 		return -1;
 	}
 	printf("接続しました: %ls\n", destination);
 
-	while(1){
+	while (1) {
 		// サーバにデータを送信
 		printf("サーバに送信する文字列を入力して下さい(「bye」なら終了)\n");
 
 		char send_data[1024];
 		scanf_s("%s", send_data, 1024);
-		if (****) {
+		if (send(PORT_NO, send_data, 1024, 0) < 0) {
 			printf("送信エラー\n");
 		}
 
@@ -46,7 +49,7 @@ int main(void)
 
 		// サーバからデータを受信
 		char buffer[1024];
-		if (****) {
+		if (PORT_NO, buffer, 1024, 0) {
 			printf("受信エラー\n");
 		}
 		printf("応答がきました: %s\n", buffer);
@@ -54,7 +57,7 @@ int main(void)
 
 	// ソケット通信の終了
 	printf("接続終了\n");
-	****
+	wsa_clean(PORT_NO);
 
 	return 0;
 }
